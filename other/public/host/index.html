@@ -1,0 +1,145 @@
+<html>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+<style>
+    #triple-ctr>div {
+        flex: 0 0 33%;
+        display: flex;
+        flex-direction: column;
+        padding: 0 30px;
+    }
+
+    button {
+        flex: 1 0 auto;
+    }
+
+    /* #triple-ctr>div {
+        flex: 1 1 auto;
+    } */
+
+    .goals {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .numSets {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .numSets div {
+        width: 100%;
+        font-size: 2.5em;
+    }
+
+    .numSets button {
+        width: 14%;
+    }
+
+    .goals>button {
+        flex: 0 0 8vw;
+        height: 8vw;
+        font-size: 3em;
+    }
+
+    .countdown {
+        font-size: 3em;
+    }
+</style>
+
+<body style="display: flex; flex-direction: column; text-align: center; margin: 30px;">
+    <h1>Ultimate Countdown</h1>
+    <div id="triple-ctr" style="flex-grow: 1; display: flex;">
+        <!--<div class="teamA">
+            <h2>Team A's Goals</h2>
+            <span style="display: flex"><button class="addGoal">More goals</button><button class="rm">Less
+                    goals</button></span>
+            <div class="goals"></div>
+        </div>-->
+        <div style="text-align: left">
+            <h2 style="text-align: center">Rules</h2>
+            <ul>
+                <li>All teams have 3 minutes to come up with the numbers on the right, using the sets of numbers on the
+                    left.</li>
+                <li>Only one set of numbers can be used for each goal.</li>
+                <li>Each number from each set may only be used once.</li>
+                <li>Not every number in each set needs to be used, i.e. you can use only 5 out of 6 numbers or less.
+                </li>
+                <li>Sets can be re-used between different goals, or not used at all.</li>
+                <li>You may use addition, subtraction, multiplication, division and raising to a power, but your final
+                    answer must be an integer. No factorials or square roots.</li>
+                <li>Your team's score is the sum of the difference between the numbers you form and the numbers on the
+                    screen.</li>
+                <li>If you fail to form a number, that counts as 10 score.</li>
+                <li>The team with the lowest score at the end of the round is the winner!</li>
+            </ul>
+        </div>
+        <div>
+            <h2>Countdown (Click to start!)</h2>
+            <div class="countdown">3:00</div>
+            <h2>Number Pool</h2>
+            <span style="display: flex"><button class="addNos">Add Numbers</button><button class="rm">Remove
+                    Numbers</button></span>
+            <div class="numSets"></div>
+        </div>
+        <div class="teamA">
+            <h2>Goals</h2>
+            <span style="display: flex"><button class="addGoal">More goals</button><button class="rm">Less
+                    goals</button></span>
+            <div class="goals"></div>
+        </div>
+    </div>
+    <script>
+
+        Array.prototype.sample = function () {
+            return this[Math.floor(Math.random() * this.length)];
+        }
+        let countdown = document.querySelector(".countdown");
+        let endingTime = undefined;
+        countdown.addEventListener("click", (e) => {
+            if (!endingTime) {
+                endingTime = Date.now() + 60 * 1000 * 3;
+                setInterval(() => {
+                    let timeRemaining = endingTime - Date.now();
+                    if (timeRemaining > 0) {
+                        countdown.innerText = (new Date(timeRemaining)).toLocaleTimeString().slice(3);
+                    } else {
+                        countdown.innerText = "Time's up!";
+                    }
+                }, 200);
+            }
+        })
+        let gameTimerInterval = -1;
+        document.addEventListener("click", (e) => {
+            if (!e.target.matches("button")) return;
+
+            // Button types
+            let containingDiv = e.target.parentElement.nextElementSibling;
+            if (e.target.matches(".addNos")) {
+                let newNos = document.createElement("div");
+                let countdownNumbers = [];
+                let numLarge = Math.floor(Math.random() * 2) + 2;
+                for (let i = 0; i < numLarge; i++) {
+                    countdownNumbers.push([25, 50, 75, 100].sample());
+                }
+                for (let i = 0; i < 6 - numLarge; i++) {
+                    countdownNumbers.push([1, 2, 3, 4, 5, 6, 7, 8, 9, 10].sample());
+                }
+                newNos.innerHTML = (containingDiv.children.length + 1) + ": " + countdownNumbers.map(i => `<button>${i}</button>`).join("");
+                containingDiv.appendChild(newNos);
+            } else if (e.target.matches(".addGoal")) {
+                let newGoal = document.createElement("button");
+                newGoal.innerText = Math.floor(Math.random() * 500 + 200);
+                containingDiv.appendChild(newGoal);
+            } else if (e.target.matches(".rm")) {
+                containingDiv.children[containingDiv.children.length - 1].remove();
+            }
+        })
+    </script>
+</body>
+
+</html>
