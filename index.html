@@ -3,7 +3,7 @@
     integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 <style>
     #triple-ctr>div {
-        flex: 0 0 33%;
+        flex: 0 0 50%;
         display: flex;
         flex-direction: column;
         padding: 0 30px;
@@ -52,7 +52,7 @@
 </style>
 
 <body style="display: flex; flex-direction: column; text-align: center; margin: 30px;">
-    <h1>Ultimate Countdown</h1>
+    <h1>Ultimate Countdown (<a href="rules" class="showRules">Rules</a>)</h1>
     <div id="triple-ctr" style="flex-grow: 1; display: flex;">
         <!--<div class="teamA">
             <h2>Team A's Goals</h2>
@@ -60,24 +60,6 @@
                     goals</button></span>
             <div class="goals"></div>
         </div>-->
-        <div style="text-align: left">
-            <h2 style="text-align: center">Rules</h2>
-            <ul>
-                <li>All teams have 3 minutes to come up with the numbers on the right, using the sets of numbers on the
-                    left.</li>
-                <li>Only one set of numbers can be used for each goal.</li>
-                <li>Each number from each set may only be used once.</li>
-                <li>Not every number in each set needs to be used, i.e. you can use only 5 out of 6 numbers or less.
-                </li>
-                <li>Sets can be re-used between different goals, or not used at all.</li>
-                <li>You may use addition, subtraction, multiplication, division and raising to a power, but your final
-                    answer must be an integer. No factorials or square roots.</li>
-                <li>Your team's score is the sum of the difference between the numbers you form and the numbers on the
-                    screen.</li>
-                <li>If you fail to form a number, that counts as 10 score.</li>
-                <li>The team with the lowest score at the end of the round is the winner!</li>
-            </ul>
-        </div>
         <div>
             <h2>Countdown (Click to start!)</h2>
             <div class="countdown">3:00</div>
@@ -94,7 +76,6 @@
         </div>
     </div>
     <script>
-
         Array.prototype.sample = function () {
             return this[Math.floor(Math.random() * this.length)];
         }
